@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Drum Kit</title>
+    <style>
+        body {
+            height: 95vh;
+            background: linear-gradient(100deg, rgb(158, 154, 154), rgb(146, 190, 216));
+        }
+
+        kbd {
+
+            color: white;
+            font-size: 45px;
+            font-weight: 900;
+        }
+
+        .sound {
+            font-weight: 400;
+            font-size: 30px;
+            /* font-weight: 100px; */
+            color: rgb(178, 200, 38);
+
+        }
+
+        .keys {
+            height: 54vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            /* border: 2px solid black; */
+        }
+
+        .playing {
+            transform: scale(1.2);
+            border-color: #ffc600 !important;
+            box-shadow: 0 0 10px #ffc600;
+            ;
+        }
+
+        .key {
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid black;
+            border-radius: 5px;
+            height: 8rem;
+            width: 10rem;
+            transition: all 0.07s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 0 0 5px black;
+        }
+
+        .header {
+            background: linear-gradient(to left, #56b19b, #9d3537);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 60px;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            margin: 30px 0;
+            /* Optional extras */
+            letter-spacing: 1.5px;
+        }
+    </style>
+</head>
+
+<body style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+    <div class="header">
+        Welcome to Ayan's Virtual Drumkit!
+    </div>
+    <div class="keys">
+
+
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">Clap</span>
+        </div>
+
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">hihat</span>
+        </div>
+
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">tom</span>
+        </div>
+
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">ting</span>
+        </div>
+
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">impact</span>
+        </div>
+
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">hat</span>
+        </div>
+
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">kick</span>
+        </div>
+
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">openhat</span>
+        </div>
+
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">snare</span>
+        </div>
+    </div>
+
+    <audio data-key="65" src="beat-ride-cymbal-hit-359399.mp3"></audio>
+    <audio data-key="83" src="clap-for-fred-91048.mp3"></audio>
+    <audio data-key="68" src="fx-percussion-huge-cinematic-tom-hit-283585.mp3"></audio>
+    <audio data-key="70" src="glass-ting-89283.mp3"></audio>
+    <audio data-key="71" src="impact-fx-41103.mp3"></audio>
+    <audio data-key="72" src="kathetroid-hat-96057.mp3"></audio>
+    <audio data-key="74" src="kick-drum-263837.mp3"></audio>
+    <audio data-key="75" src="openhat-164697.mp3"></audio>
+    <audio data-key="76" src="tr707-snare-drum-241412.mp3"></audio>
+
+    <script>
+        function changeText() {
+            let soundText = document.querySelectorAll('.sound');
+            // console.log(soundText);
+            soundText.forEach((text) => {
+                text.innerText = text.innerText.toUpperCase();
+
+            });
+        }
+        function playSound(e) {
+            const audioKey = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+            // console.log(key)
+
+            if (!audioKey) return;
+            audioKey.currentTime = 0;
+            audioKey.play();
+            key.classList.add("playing")
+        }
+
+        function removetransition(e) {
+            // console.log(e)
+            if (e.propertyName != "transform") return;
+            // this --> Refers to the key cause it's called under a specific key addEventListener();
+            this.classList.remove('playing')
+        }
+
+        let keys = document.querySelectorAll('.key')
+        keys.forEach((key) => {
+            key.addEventListener('transitionend', removetransition);
+        })
+
+        window.addEventListener('keydown', playSound);
+        window.onload = changeText;
+    </script>
+</body>
+
+</html>
