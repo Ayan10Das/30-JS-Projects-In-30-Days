@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konami code detection</title>
+</head>
+<body>
+    <script>
+        let konami=[];
+        let code="ayan"
+
+        function konamiCodeDetction(e){
+            // console.log(e.key) //Pritns the prssed key 
+            konami.push(e.key);
+            // console.log(konami)  Storing pressed key and displaying all of them.
+            konami.splice(-code.length-1,konami.length-code.length);
+            
+            if(konami.join('').includes("ayan")){
+                alert('Hey you typed my name!')
+            }
+
+        }
+
+        window.addEventListener('keyup',konamiCodeDetction);
+    </script>
+</body>
+</html>
